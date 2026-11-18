@@ -37,25 +37,6 @@ ollama-chat-standalone/
 
 No `npm install`, `npm start`, or Node.js server is needed to run this application.
 
-## Important: browser CORS configuration
-
-Browsers enforce CORS. Ollama must allow the origin from which the HTML page is served.
-
-For local testing with VS Code Live Server, the page commonly uses an origin such as `http://127.0.0.1:5500` or `http://localhost:5500`. Configure Ollama's `OLLAMA_ORIGINS` to allow that origin, then restart Ollama.
-
-For example, on Windows PowerShell, for the current terminal session:
-
-```powershell
-$env:OLLAMA_ORIGINS="http://localhost:5500,http://127.0.0.1:5500"
-ollama serve
-```
-
-If Ollama is already running as a desktop/background application, setting the variable in a separate terminal may not affect that existing process. Set the environment variable for the Ollama application process and restart Ollama.
-
-For a quick local-only test, Ollama supports `OLLAMA_ORIGINS=*`, but this is broader than necessary. Prefer allowing only the local origin you use. Do not expose the Ollama API to untrusted networks.
-
-Opening the page directly as a `file://` URL can produce an opaque browser origin and CORS problems. A static file preview is recommended; it serves the files without adding a Node/npm backend.
-
 ## How it works
 
 The browser calls:
