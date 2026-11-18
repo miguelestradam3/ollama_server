@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#111318">
+  <title>Ollama Chat</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">O</div>
+        <div><strong>Ollama Chat</strong><span>Local AI workspace</span></div>
+      </div>
+
+      <button class="new-chat-button" id="new-chat-button" type="button">
+        <span>＋</span> New conversation
+      </button>
+
+      <div class="sidebar-label">YOUR CONVERSATIONS</div>
+      <div class="conversation-list" id="conversation-list"></div>
+
+      <div class="sidebar-bottom">
+        <div class="connection-indicator">
+          <span class="status-dot" id="connection-dot"></span>
+          <span id="connection-label">Checking Ollama…</span>
+        </div>
+        <button class="text-button" id="refresh-models-button" type="button">↻ Refresh models</button>
+      </div>
+    </aside>
+
+    <main class="main-panel">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobile-menu" type="button" aria-label="Toggle menu">☰</button>
+        <div class="topbar-title">Workspace <span>/</span> <strong id="active-title">New conversation</strong></div>
+        <div class="topbar-actions">
+          <label class="model-control">
+            <span>MODEL</span>
+            <select id="model-select" aria-label="Ollama model">
+              <option value="">Loading models…</option>
+            </select>
+          </label>
+          <button class="icon-button" id="settings-button" type="button" title="Settings" aria-label="Settings">⚙</button>
+        </div>
+      </header>
+
+      <section class="chat-area" id="chat-area">
+        <div class="welcome" id="welcome">
+          <div class="welcome-orb">✳</div>
+          <p class="eyebrow">YOUR PRIVATE AI WORKSPACE</p>
+          <h1>What can I help you<br><span>work on today?</span></h1>
+          <p class="welcome-copy">Chat with models running locally on your machine, powered by Ollama.</p>
+          <div class="suggestions">
+            <button class="suggestion" data-prompt="Explain JavaScript promises with a simple example."> <span>⌘</span><b>Learn something</b><small>Explain a programming concept</small></button>
+            <button class="suggestion" data-prompt="Help me debug this code:"> <span>⌁</span><b>Write or debug code</b><small>Work through a coding problem</small></button>
+            <button class="suggestion" data-prompt="Give me a practical plan to learn Python."> <span>◷</span><b>Make a plan</b><small>Break a goal into clear steps</small></button>
+          </div>
+        </div>
+        <div class="messages" id="messages" aria-live="polite"></div>
+      </section>
+
+      <section class="composer-wrap">
+        <div class="settings-panel" id="settings-panel" hidden>
+          <div class="setting-row">
+            <label for="temperature">Temperature <strong id="temperature-value">0.7</strong></label>
+            <input id="temperature" type="range" min="0" max="2" step="0.1" value="0.7">
+          </div>
+          <div class="setting-row">
+            <label for="system-prompt">System instruction</label>
+            <textarea id="system-prompt" rows="2" placeholder="Example: You are a helpful programming tutor."></textarea>
+          </div>
+          <p class="settings-note">Settings apply to new conversations. Temperature controls response randomness.</p>
+        </div>
+
+        <div class="file-tools">
+          <input id="file-input" type="file" multiple hidden accept=".txt,.md,.csv,.json,.xml,.html,.htm,.css,.js,.ts,.py,.php,.sql,.log,.yaml,.yml,.ini,.pdf,.docx">
+          <button class="attach-button" id="attach-button" type="button" title="Attach documents">＋ Attach files</button>
+          <span class="file-help">TXT, PDF, DOCX, CSV, JSON and code files · Max 2 MB per file</span>
+        </div>
+        <div class="selected-files" id="selected-files" aria-live="polite" hidden></div>
+        <form class="composer" id="chat-form">
+          <textarea id="message-input" rows="1" placeholder="Message your local model…" aria-label="Message"></textarea>
+          <div class="composer-footer">
+            <span class="composer-hint">Local inference · Your prompts stay on your machine</span>
+            <div class="composer-actions">
+              <button class="stop-button" id="stop-button" type="button" hidden>Stop</button>
+              <button class="send-button" id="send-button" type="submit" aria-label="Send message">↑</button>
+            </div>
+          </div>
+        </form>
+        <p class="disclaimer">AI responses can be inaccurate. Verify important information.</p>
+      </section>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <!-- Browser-side document readers; no Node.js or npm required. -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
